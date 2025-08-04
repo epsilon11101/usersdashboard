@@ -1,6 +1,5 @@
-import clsx from "clsx";
 import React, { FC, InputHTMLAttributes, Ref } from "react";
-import { twMerge } from "tailwind-merge";
+import { cn } from "../../app/lib/utils";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
@@ -8,9 +7,20 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error: boolean;
 }
 
+const errorStyles = (hasError: boolean) => {
+  return hasError
+    ? "border-e-red-500 text-red-500 outline-red-500"
+    : "border-primary-300 text-white outline-primary-300";
+};
+
 const Input: FC<InputProps> = ({ type, className, error, ...rest }) => {
-  const base = clsx(
-    `
+  return (
+    <input
+      type={type}
+      {...rest}
+      aria-invalid={error || undefined}
+      className={cn(
+        `
               h-[56px]
               w-[448px]
               border-1
@@ -19,12 +29,10 @@ const Input: FC<InputProps> = ({ type, className, error, ...rest }) => {
               text-white
               px-4
             `,
-    error
-      ? "border-e-red-500 text-red-500 outline-red-500"
-      : "border-primary-300 text-white outline-primary-300"
+        errorStyles(error)
+      )}
+    />
   );
-
-  return <input type={type} className={twMerge(base, className)} {...rest} />;
 };
 
 Input.displayName = "Input";
