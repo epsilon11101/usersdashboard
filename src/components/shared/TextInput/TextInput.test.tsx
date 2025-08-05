@@ -43,11 +43,11 @@ const FormWrapper: FC<FormWrapperProps> = ({ onSubmit, onChange }) => {
 };
 
 describe("TextInput integration test", () => {
+  const user = userEvent.setup();
   const email = "test@example.com";
+  const onSubmit = jest.fn();
 
   it("should show error message when submitting invalid email", async () => {
-    const user = userEvent.setup();
-    const onSubmit = jest.fn();
     render(<FormWrapper onSubmit={onSubmit} />);
 
     const submit = screen.getByText("Submit");
@@ -63,9 +63,6 @@ describe("TextInput integration test", () => {
   });
 
   it("should call onSubmit with valid data", async () => {
-    const user = userEvent.setup();
-    const onSubmit = jest.fn();
-
     render(<FormWrapper onSubmit={onSubmit} />);
 
     const input = screen.getByPlaceholderText("Email");
@@ -84,7 +81,6 @@ describe("TextInput integration test", () => {
   });
 
   it("calls on changes when user typing", async () => {
-    const user = userEvent.setup();
     const onChange = jest.fn();
 
     render(<FormWrapper onSubmit={() => {}} onChange={onChange} />);
