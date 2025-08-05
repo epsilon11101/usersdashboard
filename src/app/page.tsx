@@ -1,5 +1,5 @@
 "use client";
-import TextInput from "@/components/shared/TextInput";
+import TextInput from "@/components/shared/TextInput/TextInput";
 import { useForm } from "react-hook-form";
 import loginSchema, {
   loginSchemaType,
@@ -31,21 +31,32 @@ export default function Home() {
         <div>
           <p className="text-white text-3xl">Welcome Back</p>
         </div>
-        <div>
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <TextInput
-              control={control}
-              name="email"
-              id="useEmailId"
-              errors={errors}
-              placeholder="Email"
-              type="email"
-            />
-            <button type="submit" className="bg-pink-400">
-              submit
-            </button>
-          </form>
-        </div>
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          className="flex flex-col  gap-4 "
+        >
+          <TextInput
+            control={control}
+            name="email"
+            id="useEmailId"
+            errors={errors}
+            placeholder="Email"
+            type="email"
+          />
+          <TextInput
+            control={control}
+            name="password"
+            id="userPassword"
+            errors={errors}
+            placeholder="Password"
+            type="password"
+          />
+          <button type="submit" className="bg-pink-400">
+            submit
+          </button>
+        </form>
         <div>
           <p className="text-white">
             Don´t have an account? <a className="text-primary-400">Sign up</a>
