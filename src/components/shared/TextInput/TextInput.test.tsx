@@ -1,8 +1,10 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextInput from "@/components/shared/TextInput/TextInput";
+import { ChangeEventHandler, FC } from "react";
+import userEvent from "@testing-library/user-event";
 
 const loginSchema = z.object({
   email: z.email("Invalid email address"),
@@ -10,7 +12,12 @@ const loginSchema = z.object({
 
 type LoginForm = z.infer<typeof loginSchema>;
 
-const FormWrapper = ({ onSubmit }: { onSubmit: (data: LoginForm) => void }) => {
+interface FormWrapperProps {
+  onSubmit: (data: LoginForm) => void;
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+}
+
+const FormWrapper: FC<FormWrapperProps> = ({ onSubmit, onChange }) => {
   const {
     handleSubmit,
     control,
@@ -28,6 +35,7 @@ const FormWrapper = ({ onSubmit }: { onSubmit: (data: LoginForm) => void }) => {
         errors={errors}
         placeholder="Email"
         type="email"
+        onChange={onChange}
       />
       <button type="submit">Submit</button>
     </form>
@@ -35,12 +43,15 @@ const FormWrapper = ({ onSubmit }: { onSubmit: (data: LoginForm) => void }) => {
 };
 
 describe("TextInput integration test", () => {
+  const email = "test@example.com";
+
   it("should show error message when submitting invalid email", async () => {
+    const user = userEvent.setup();
     const onSubmit = jest.fn();
     render(<FormWrapper onSubmit={onSubmit} />);
 
     const submit = screen.getByText("Submit");
-    fireEvent.click(submit);
+    user.click(submit);
 
     await waitFor(() => {
       expect(screen.getByPlaceholderText("Email")).toHaveAttribute(
@@ -52,21 +63,37 @@ describe("TextInput integration test", () => {
   });
 
   it("should call onSubmit with valid data", async () => {
+    const user = userEvent.setup();
     const onSubmit = jest.fn();
+
     render(<FormWrapper onSubmit={onSubmit} />);
 
     const input = screen.getByPlaceholderText("Email");
     const submit = screen.getByText("Submit");
 
-    fireEvent.change(input, { target: { value: "test@example.com" } });
-    fireEvent.click(submit);
+    await user.type(input, email);
+    await user.click(submit);
 
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledTimes(1);
     });
 
     const submittedData = onSubmit.mock.calls[0][0];
-    expect(submittedData).toEqual({ email: "test@example.com" });
+    expect(submittedData).toEqual({ email: email });
     expect(screen.queryByText("Invalid email address")).not.toBeInTheDocument();
+  });
+
+  it("calls on changes when user typing", async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+
+    render(<FormWrapper onSubmit={() => {}} onChange={onChange} />);
+
+    const emailInput = screen.getByPlaceholderText("Email");
+
+    await user.type(emailInput, email);
+
+    expect(onChange).toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledTimes(email.length);
   });
 });
