@@ -26,7 +26,6 @@ const Input: FC<InputProps> = ({ type, className, error, ...rest }) => {
               border-1
               focus:outline-1
               rounded-xl
-              text-white
               px-4
             `,
         errorStyles(error)

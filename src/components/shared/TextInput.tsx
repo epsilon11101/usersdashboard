@@ -50,6 +50,7 @@ const TextInput = <T extends FieldValues>({
         value={field.value || ""}
         error={!!error}
       />
+      {/* TODO: add errorMessage */}
     </>
   );
 };
