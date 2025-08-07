@@ -5,6 +5,7 @@ import loginSchema, {
   loginSchemaType,
 } from "../components/features/login/loginValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Button from "@/components/ui/Button/Button";
 
 export default function Home() {
   const {
@@ -53,9 +54,9 @@ export default function Home() {
             placeholder="Password"
             type="password"
           />
-          <button type="submit" className="bg-pink-400">
-            submit
-          </button>
+          <Button type="submit" variant="contained" fullWidth>
+            Log in
+          </Button>
         </form>
         <div>
           <p className="text-white">
