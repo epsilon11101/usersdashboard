@@ -10,7 +10,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const errorStyles = (hasError: boolean) => {
   return hasError
-    ? "border-e-red-500 text-red-500 outline-red-500"
+    ? "border-warning text-warning outline-warning"
     : "border-primary-300 text-white outline-primary-300";
 };
 

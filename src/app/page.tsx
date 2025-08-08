@@ -6,6 +6,7 @@ import loginSchema, {
 } from "../components/features/login/loginValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/ui/Button/Button";
+import { ScanFace } from "lucide-react";
 
 export default function Home() {
   const {
@@ -54,13 +55,20 @@ export default function Home() {
             placeholder="Password"
             type="password"
           />
-          <Button type="submit" variant="contained" fullWidth>
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            startIcon={<ScanFace />}
+            endIcon={<ScanFace />}
+          >
             Log in
           </Button>
         </form>
         <div>
           <p className="text-white">
-            Don´t have an account? <a className="text-primary-400">Sign up</a>
+            Don´t have an account?{" "}
+            <a className="text-primary-400 hover:cursor-pointer">Sign up</a>
           </p>
         </div>
       </div>
