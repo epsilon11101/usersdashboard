@@ -14,5 +14,7 @@
   --color-primary-800: #A70D58;
   --color-primary-900: #8B104B;
   --color-primary-950: #55022A;
-  --color-primary-bg-color: #472438;
+  --color-body-color: #472438;
+  --color-white: #fff;
+  --color-warning: #ff2323;
 }
