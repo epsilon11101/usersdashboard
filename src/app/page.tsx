@@ -7,6 +7,7 @@ import loginSchema, {
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/ui/Button/Button";
 import { ScanFace } from "lucide-react";
+import Slot from "@/components/ui/Slot/Slot";
 
 export default function Home() {
   const {
@@ -70,6 +71,32 @@ export default function Home() {
             Don´t have an account?{" "}
             <a className="text-primary-400 hover:cursor-pointer">Sign up</a>
           </p>
+        </div>
+        <div>
+          <Slot
+            className="p-2 bg-amber-300"
+            data-x="1"
+            style={{
+              background: "red",
+              color: "purple",
+            }}
+            onClick={() => {
+              console.log("hola desde slot");
+            }}
+          >
+            <button
+              className="btn"
+              onClick={() => {
+                console.log("hola desde hijo");
+              }}
+              style={{
+                textAlign: "center",
+                color: "purple",
+              }}
+            >
+              TEST SLOT
+            </button>
+          </Slot>
         </div>
       </div>
     </main>
