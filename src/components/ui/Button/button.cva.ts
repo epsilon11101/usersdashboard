@@ -122,8 +122,6 @@ export const button = cva(
   }
 );
 
-export type ButtonCVAProps = VariantProps<typeof button>;
-
 export interface ButtonProps
   extends Omit<
       React.ButtonHTMLAttributes<HTMLButtonElement>,
